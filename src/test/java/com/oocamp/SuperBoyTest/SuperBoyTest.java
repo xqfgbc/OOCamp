@@ -76,4 +76,29 @@ public class SuperBoyTest {
         //then
         Assert.assertEquals(info.getStatus(), 0);
     }
+
+    @Test
+    public void should_given_two_parkinglot_and_superParkingBoy_parking_car_when_superParkingBoy_picking_car_return_car(){
+        //given
+        superParkingBoy.parking(new Car("123"));
+
+        //when
+        Car car = superParkingBoy.picking("123");
+
+        //then
+        Assert.assertEquals(car.getCarNumber(), "123");
+    }
+
+    @Test
+    public void should_given_two_parkinglot_and_superParkingBoy_parking_two_car_when_superParkingBoy_picking_car_that_not_in_parkinglot_return_picking_car_fail(){
+        //given
+        superParkingBoy.parking(new Car("123"));
+        superParkingBoy.parking(new Car("gbc"));
+
+        //when
+        Car car = superParkingBoy.picking("456");
+
+        //then
+        Assert.assertEquals(car.getCarNumber(), "");
+    }
 }

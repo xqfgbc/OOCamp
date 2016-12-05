@@ -8,6 +8,7 @@ import com.oocamp.parking.ParkingPosition;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class SuperParkingBoy {
 
@@ -59,5 +60,27 @@ public class SuperParkingBoy {
         }
 
         return position;
+    }
+
+    public Car picking(String carNumber) {
+        Predicate<String> filter = (item) -> item.equals(carNumber);
+
+        boolean isExists = parkingLot.getPlace().stream()
+                .flatMap(item -> Arrays.stream(item.getParkingPlace()))
+                .anyMatch(filter);
+
+        if (isExists){
+            for (ParkingLotInfo item : parkingLot.getPlace()){
+                for (int i=0; i < item.getParkingPlace().length; i++){
+                    if (item.getParkingPlace()[i].equals(carNumber)){
+                        item.getParkingPlace()[i] = "";
+
+                        return new Car(carNumber);
+                    }
+                }
+            }
+        }
+
+        return new Car("");
     }
 }
